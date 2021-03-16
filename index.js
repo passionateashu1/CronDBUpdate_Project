@@ -10,16 +10,16 @@ app = express();
 
 //connect to db
 //connection url
-function importCsvAndUpdateDB_shoes(mongoDB, modelClass, csv_file_url, file_save_path, file_column_delimiter) {
+function importCsvAndUpdateDB_padels(mongoDB, modelClass, csv_file_url, file_save_path, file_column_delimiter) {
 
   const dburl = process.env.MONGODB_HOST + '/' + mongoDB
-  var connShoes = mongoose.createConnection(dburl, {
+  var connPadels = mongoose.createConnection(dburl, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
 
-  const shoeSchema = require('./models/' + modelClass);
-  const Shoe = connShoes.model("Shoe", shoeSchema);
+  const padelSchema = require('./models/' + modelClass);
+  const Padel = connPadels.model("Padel", padelSchema);
 
   const url = csv_file_url; // link to file you want to download
   const path = file_save_path; // where to save a file
@@ -53,11 +53,11 @@ function importCsvAndUpdateDB_shoes(mongoDB, modelClass, csv_file_url, file_save
 
               if (data.length > 0) {
                 //Delete all existing recors from collection
-                Shoe.deleteMany({}).then(function() {
+                Padel.deleteMany({}).then(function() {
                     console.log("Existed Data deleted in " + modelClass + " collection!"); // Success
 
                     //If delete operation successfull then only Insert all records fetched from csv
-                    Shoe.insertMany(data)
+                    Padel.insertMany(data)
                       .then((result) => {
                         console.log("Rows Inserted in " + modelClass + " collection: " + result.length);
                         //mongoose.disconnect();
@@ -236,7 +236,7 @@ function importCsvAndUpdateDB_runs(mongoDB, modelClass, csv_file_url, file_save_
 // Schedule tasks to be run on the server.
 cron.schedule(process.env.CRON_JOB_FREQUENCY, function() {
   console.log('Running cron job to download file and refresh db at : ' + new Date().toUTCString());
-  importCsvAndUpdateDB_shoes(process.env.TESTDB_MONGODB_DB, process.env.TESTDB_MONGODB_MODEL, process.env.TESTDB_CSV_FILE_URL, process.env.TESTDB_FILE_SAVE_PATH, process.env.TESTDB_COLUMN_DELIMITER);
+  importCsvAndUpdateDB_padels(process.env.PADELDB_MONGODB_DB, process.env.PADELDB_MONGODB_MODEL, process.env.PADELDB_CSV_FILE_URL, process.env.PADELDB_FILE_SAVE_PATH, process.env.PADELDB_COLUMN_DELIMITER);
   importCsvAndUpdateDB_volleys(process.env.VOLLEYDB_MONGODB_DB, process.env.VOLLEYDB_MONGODB_MODEL, process.env.VOLLEYDB_CSV_FILE_URL, process.env.VOLLEYDB_FILE_SAVE_PATH, process.env.VOLLEYDB_COLUMN_DELIMITER);
   importCsvAndUpdateDB_runs(process.env.RUNDB_MONGODB_DB, process.env.RUNDB_MONGODB_MODEL, process.env.RUNDB_CSV_FILE_URL, process.env.RUNDB_FILE_SAVE_PATH, process.env.RUNDB_COLUMN_DELIMITER);
 });

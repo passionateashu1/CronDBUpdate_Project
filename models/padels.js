@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const shoeSchema = mongoose.Schema({
+const padelSchema = mongoose.Schema({
     sku: {
         type: String,
         required: true
@@ -26,38 +26,41 @@ const shoeSchema = mongoose.Schema({
    img: {
        type: String,
    },
-   appoggio: {
+   livello_atleta: {
        type: String,
    },
-   "categ-running": {
+   tipologia_pala: {
        type: String,
    },
-   "tipo-runner": {
+   superficie_pala: {
        type: String,
    },
-   obiettivo_runner: {
+   forma_piatto: {
        type: String,
    },
-   peso_runner: {
+   bilanciamento_pala: {
        type: String,
    },
-   larghezza_pianta: {
+   materiale_piatto: {
        type: String,
    },
-   superficie_di_corsa: {
+   materiale_cuore: {
        type: String,
    },
-   comfort_scarpa_running: {
+   sweet_spot: {
        type: String,
    },
-   relazioni: {
+   spessore: {
        type: String,
    },
-   taglia: {
+   sensazione_colpo: {
+       type: String,
+   },
+   peso: {
        type: String,
    },
 })
 
-//const Shoe = mongoose.model("Shoe", shoeSchema)
+//const Padel = mongoose.model("Padel", padelSchema)
 
-module.exports = shoeSchema
+module.exports = padelSchema
